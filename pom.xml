@@ -21,18 +21,8 @@
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.21</version>
         </dependency>
-    </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>zx-release</id>
-            <url>http://192.168.0.216:8081/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>zx-snapshot</id>
-            <url>http://192.168.0.216:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    </dependencies>
 
     <build>
         <plugins>
