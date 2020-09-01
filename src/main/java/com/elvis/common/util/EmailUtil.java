@@ -7,14 +7,23 @@ import com.elvis.common.prop.EmailProp;
  * @since : 2020/8/28 17:37
  */
 public class EmailUtil {
-    private EmailUtil() {
+    private EmailUtil(EmailProp emailProp) {
+        this.emailProp = emailProp;
     }
 
     private EmailProp emailProp;
 
-    public EmailUtil newInstance(EmailProp emailProp) {
-        this.emailProp = emailProp;
-        return this;
+    private static EmailUtil emailUtil;
+
+    public static EmailUtil newInstance(EmailProp emailProp) {
+        if (null == emailUtil) {
+            synchronized (EmailUtil.class) {
+                if (null == emailUtil) {
+                    emailUtil = new EmailUtil(emailProp);
+                }
+            }
+        }
+        return emailUtil;
     }
 
 

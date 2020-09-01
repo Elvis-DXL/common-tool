@@ -7,14 +7,23 @@ import com.elvis.common.prop.FtpProp;
  * @since : 2020/8/28 17:37
  */
 public class FtpUtil {
-    private FtpUtil() {
+    private FtpUtil(FtpProp ftpProp) {
+        this.ftpProp = ftpProp;
     }
 
     private FtpProp ftpProp;
 
-    public FtpUtil newInstance(FtpProp ftpProp) {
-        this.ftpProp = ftpProp;
-        return this;
+    private static FtpUtil ftpUtil;
+
+    public static FtpUtil newInstance(FtpProp ftpProp) {
+        if (null == ftpUtil) {
+            synchronized (FtpUtil.class) {
+                if (null == ftpUtil) {
+                    ftpUtil = new FtpUtil(ftpProp);
+                }
+            }
+        }
+        return ftpUtil;
     }
 
 
