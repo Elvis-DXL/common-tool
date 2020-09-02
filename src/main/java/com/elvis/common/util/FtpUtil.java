@@ -15,7 +15,7 @@ public class FtpUtil {
 
     private static FtpUtil ftpUtil;
 
-    public static FtpUtil newInstance(FtpProp ftpProp) {
+    public static FtpUtil getInstance(FtpProp ftpProp) {
         if (null == ftpUtil) {
             synchronized (FtpUtil.class) {
                 if (null == ftpUtil) {

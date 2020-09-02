@@ -15,7 +15,7 @@ public class EmailUtil {
 
     private static EmailUtil emailUtil;
 
-    public static EmailUtil newInstance(EmailProp emailProp) {
+    public static EmailUtil getInstance(EmailProp emailProp) {
         if (null == emailUtil) {
             synchronized (EmailUtil.class) {
                 if (null == emailUtil) {
