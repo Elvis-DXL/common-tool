@@ -21,7 +21,7 @@ public class EmailUtil {
         if (null == emailUtil) {
             synchronized (EmailUtil.class) {
                 if (null == emailUtil) {
-                    if (emailProp == null || StringUtil.isEmpty(emailProp.getUserName()) || StringUtil.isEmpty(emailProp.getPassword())
+                    if (emailProp == null || StringUtil.isEmpty(emailProp.getUsername()) || StringUtil.isEmpty(emailProp.getPassword())
                             || StringUtil.isEmpty(emailProp.getProtocol()) || StringUtil.isEmpty(emailProp.getHost())
                             || StringUtil.isEmpty(emailProp.getPort())) {
                         throw new IllegalArgumentException("Configuration information error[" + emailProp.toString() + "]");
@@ -48,8 +48,8 @@ public class EmailUtil {
         simpleEmail.setSSLOnConnect(true);
         simpleEmail.setHostName(emailProp.getHost());
         simpleEmail.setSslSmtpPort(emailProp.getPort());
-        simpleEmail.setAuthentication(emailProp.getUserName(), emailProp.getPassword());
-        simpleEmail.setFrom(emailProp.getUserName(), emailProp.getName());
+        simpleEmail.setAuthentication(emailProp.getUsername(), emailProp.getPassword());
+        simpleEmail.setFrom(emailProp.getUsername(), emailProp.getName());
         simpleEmail.setCharset("UTF-8");
         simpleEmail.addTo(targetEmail);
         simpleEmail.setSubject(title);

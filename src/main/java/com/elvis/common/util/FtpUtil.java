@@ -1,6 +1,14 @@
 package com.elvis.common.util;
 
 import com.elvis.common.prop.FtpProp;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author : Elvis
@@ -13,12 +21,19 @@ public class FtpUtil {
 
     private FtpProp ftpProp;
 
+    private FTPClient ftpClient;
+
     private static FtpUtil ftpUtil;
+    private static final String SLASH = "/";
 
     public static FtpUtil getInstance(FtpProp ftpProp) {
         if (null == ftpUtil) {
             synchronized (FtpUtil.class) {
                 if (null == ftpUtil) {
+                    if (null == ftpProp || StringUtil.isEmpty(ftpProp.getHost()) || null == ftpProp.getPort()
+                            || StringUtil.isEmpty(ftpProp.getUsername()) || StringUtil.isEmpty(ftpProp.getPassword())) {
+                        throw new IllegalArgumentException("Configuration information error[" + ftpProp.toString() + "]");
+                    }
                     ftpUtil = new FtpUtil(ftpProp);
                 }
             }
@@ -26,5 +41,165 @@ public class FtpUtil {
         return ftpUtil;
     }
 
+    /**
+     * 初始化FTP连接
+     *
+     * @throws IOException 连接失败异常
+     */
+    private void initFtpClient() throws IOException {
+        ftpClient = new FTPClient();
+        ftpClient.setControlEncoding("UTF-8");
+        ftpClient.connect(ftpProp.getHost(), ftpProp.getPort());
+        ftpClient.login(ftpProp.getUsername(), ftpProp.getPassword());
+        int replyCode = ftpClient.getReplyCode();
+        if (!FTPReply.isPositiveCompletion(replyCode)) {
+            throw new IOException("Failed to connect to FTP [Host=" + ftpProp.getHost() + ";Port=" + ftpProp.getPort() + "]");
+        } else {
+            ftpClient.enterLocalPassiveMode();
+        }
+    }
 
+    /**
+     * 上传文件至FTP
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名
+     * @param inStream 输入流
+     * @return 是否成功
+     */
+    public boolean uploadFile(String filePath, String fileName, InputStream inStream) {
+        boolean flag = false;
+        if (StringUtil.isEmpty(filePath)) {
+            throw new IllegalArgumentException("filePath can not be empty");
+        }
+        if (StringUtil.isEmpty(fileName)) {
+            throw new IllegalArgumentException("fileName can not be empty");
+        }
+        try {
+            initFtpClient();
+            ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+            flag = ftpClient.changeWorkingDirectory(filePath);
+            if (!flag) {
+                flag = createDir(filePath);
+                if (!flag) {
+                    throw new IOException("Failed to create directory：" + filePath);
+                }
+            }
+            flag = ftpClient.storeFile(fileName, inStream);
+            if (!flag) {
+                throw new IOException("Failed to upload file：" + fileName);
+            }
+            inStream.close();
+            ftpClient.logout();
+        } catch (IOException e) {
+            flag = false;
+            e.printStackTrace();
+        } finally {
+            if (ftpClient.isConnected()) {
+                try {
+                    ftpClient.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            IOUtil.closeStream(inStream);
+        }
+        return flag;
+    }
+
+    /**
+     * 下载FTP文件
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名
+     * @param osStream 输出流
+     * @return 是否成功
+     */
+    public boolean downloadFile(String filePath, String fileName, OutputStream osStream) {
+        boolean flag = false;
+        if (StringUtil.isEmpty(filePath)) {
+            throw new IllegalArgumentException("filePath can not be empty");
+        }
+        if (StringUtil.isEmpty(fileName)) {
+            throw new IllegalArgumentException("fileName can not be empty");
+        }
+        InputStream inStream = null;
+        try {
+            initFtpClient();
+            ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+            ftpClient.changeWorkingDirectory(filePath);
+            inStream = ftpClient.retrieveFileStream(fileName);
+            if (inStream == null) {
+                throw new IOException("Failed to read file stream：" + fileName);
+            }
+            IOUtil.inToOut(inStream, osStream);
+            ftpClient.logout();
+            flag = true;
+        } catch (IOException e) {
+            flag = false;
+            e.printStackTrace();
+        } finally {
+            if (ftpClient.isConnected()) {
+                try {
+                    ftpClient.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            IOUtil.closeStream(inStream, osStream);
+        }
+        return flag;
+    }
+
+    /**
+     * 创建目录
+     *
+     * @param filePath 文件目录
+     * @return 成功与否
+     * @throws IOException 创建异常
+     */
+    private boolean createDir(String filePath) throws IOException {
+        if (StringUtil.isEmpty(filePath)) {
+            throw new IllegalArgumentException("filePath can not be empty");
+        }
+        if (filePath.startsWith(SLASH)) {
+            filePath = filePath.substring(1);
+        }
+        List<String> dirList = Arrays.asList(filePath.split(SLASH));
+        if (dirList.size() > 0) {
+            String path = "";
+            boolean flag = false;
+            for (String dir : dirList) {
+                path += SLASH + dir;
+                if (!existDir(path)) {
+                    flag = ftpClient.makeDirectory(dir);
+                    if (flag) {
+                        flag = ftpClient.changeWorkingDirectory(dir);
+                        if (!flag) {
+                            throw new IOException("Failed to switch directory：" + dir);
+                        }
+                    } else {
+                        throw new IOException("Failed to create directory：" + dir);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 通过切换路径的方式判断服务器文件路径是否存在
+     *
+     * @param filePath 文件目录
+     * @return 是否存在
+     */
+    private boolean existDir(String filePath) {
+        boolean flag = false;
+        try {
+            flag = ftpClient.changeWorkingDirectory(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
 }

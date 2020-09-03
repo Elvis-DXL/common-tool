@@ -24,7 +24,7 @@ public class EmailProp implements Serializable {
     @ApiModelProperty("协议")
     private String protocol;
     @ApiModelProperty("发送人邮件地址")
-    private String userName;
+    private String username;
     @ApiModelProperty("发送人邮件密码/授权码")
     private String password;
     @ApiModelProperty("邮件发送人名称")
