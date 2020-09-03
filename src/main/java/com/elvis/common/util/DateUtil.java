@@ -578,4 +578,21 @@ public class DateUtil {
         return result;
     }
 
+    /**
+     * 计算时间之间的天数，包含开始和结束当天
+     *
+     * @param time 时间区间
+     * @return 天数
+     */
+    public static int countDaysByTime(Time time) {
+        if (null == time || null == time.getStartTime() || null == time.getEndTime()
+                || time.getStartTime().after(time.getEndTime())) {
+            return 0;
+        }
+        Date startTime = dateStartTime(time.getStartTime());
+        Date endTime = dateStartTime(addDate(time.getEndTime(), Calendar.DATE, 1));
+        long countDays = (endTime.getTime() - startTime.getTime()) / 1000 / 3600 / 24;
+        return (int) countDays;
+    }
+
 }
