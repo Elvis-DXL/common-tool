@@ -1,7 +1,9 @@
 package com.elvis.common.prop;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import java.io.Serializable;
  */
 @Data
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmailProp implements Serializable {
     @ApiModelProperty("服务器")
     private String host;
