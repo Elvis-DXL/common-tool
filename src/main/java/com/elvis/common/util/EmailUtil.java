@@ -24,7 +24,7 @@ public class EmailUtil {
                     if (emailProp == null || StringUtil.isEmpty(emailProp.getUsername()) || StringUtil.isEmpty(emailProp.getPassword())
                             || StringUtil.isEmpty(emailProp.getProtocol()) || StringUtil.isEmpty(emailProp.getHost())
                             || StringUtil.isEmpty(emailProp.getPort())) {
-                        throw new IllegalArgumentException("Configuration information error[" + emailProp.toString() + "]");
+                        throw new IllegalArgumentException("Configuration information error[" + emailProp + "]");
                     }
                     emailUtil = new EmailUtil(emailProp);
                 }

@@ -32,7 +32,7 @@ public class FtpUtil {
                 if (null == ftpUtil) {
                     if (null == ftpProp || StringUtil.isEmpty(ftpProp.getHost()) || null == ftpProp.getPort()
                             || StringUtil.isEmpty(ftpProp.getUsername()) || StringUtil.isEmpty(ftpProp.getPassword())) {
-                        throw new IllegalArgumentException("Configuration information error[" + ftpProp.toString() + "]");
+                        throw new IllegalArgumentException("Configuration information error[" + ftpProp + "]");
                     }
                     ftpUtil = new FtpUtil(ftpProp);
                 }
