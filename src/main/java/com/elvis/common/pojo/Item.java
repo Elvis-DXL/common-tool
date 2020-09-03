@@ -2,7 +2,9 @@ package com.elvis.common.pojo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,6 +13,8 @@ import java.io.Serializable;
  * @since : 2020/6/28 10:47
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(value = "Item|项对象")
 public class Item<T> implements Serializable {
 
@@ -22,4 +26,9 @@ public class Item<T> implements Serializable {
 
     @ApiModelProperty("对象值")
     private T objValue;
+
+    public Item(String label, String value) {
+        this.label = label;
+        this.value = value;
+    }
 }
