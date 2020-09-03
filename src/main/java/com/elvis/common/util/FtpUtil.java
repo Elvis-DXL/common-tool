@@ -152,6 +152,42 @@ public class FtpUtil {
     }
 
     /**
+     * 删除FTP文件
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名
+     * @return 是否成功
+     */
+    public boolean deleteFile(String filePath, String fileName) {
+        if (StringUtil.isEmpty(filePath)) {
+            throw new IllegalArgumentException("filePath can not be empty");
+        }
+        if (StringUtil.isEmpty(fileName)) {
+            throw new IllegalArgumentException("fileName can not be empty");
+        }
+        boolean flag = false;
+        try {
+            initFtpClient();
+            ftpClient.changeWorkingDirectory(filePath);
+            ftpClient.deleteFile(fileName);
+            ftpClient.logout();
+            flag = true;
+        } catch (IOException e) {
+            flag = false;
+            e.printStackTrace();
+        } finally {
+            if (ftpClient.isConnected()) {
+                try {
+                    ftpClient.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return flag;
+    }
+
+    /**
      * 创建目录
      *
      * @param filePath 文件目录
