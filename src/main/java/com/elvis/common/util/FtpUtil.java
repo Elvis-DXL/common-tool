@@ -110,12 +110,12 @@ public class FtpUtil {
     /**
      * 下载FTP文件
      *
-     * @param filePath 文件路径
-     * @param fileName 文件名
-     * @param osStream 输出流
+     * @param filePath  文件路径
+     * @param fileName  文件名
+     * @param outStream 输出流
      * @return 是否成功
      */
-    public boolean downloadFile(String filePath, String fileName, OutputStream osStream) {
+    public boolean downloadFile(String filePath, String fileName, OutputStream outStream) {
         boolean flag = false;
         if (StringUtil.isEmpty(filePath)) {
             throw new IllegalArgumentException("filePath can not be empty");
@@ -132,7 +132,7 @@ public class FtpUtil {
             if (inStream == null) {
                 throw new IOException("Failed to read file stream：" + fileName);
             }
-            IOUtil.inToOut(inStream, osStream);
+            IOUtil.inToOut(inStream, outStream);
             ftpClient.logout();
             flag = true;
         } catch (IOException e) {
@@ -146,7 +146,7 @@ public class FtpUtil {
                     e.printStackTrace();
                 }
             }
-            IOUtil.closeStream(inStream, osStream);
+            IOUtil.closeStream(inStream, outStream);
         }
         return flag;
     }
