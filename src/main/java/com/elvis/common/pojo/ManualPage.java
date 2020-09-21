@@ -29,7 +29,7 @@ public class ManualPage<T> implements Serializable {
     private ManualPage() {
     }
 
-    public static <T> ManualPage manualPage(List<T> data, int pageNum, int pageSize) {
+    public static <T> ManualPage<T> manualPage(List<T> data, int pageNum, int pageSize) {
         ManualPage<T> result = new ManualPage<>();
         if (null == data || data.size() == 0) {
             result.setPageNum(1);
