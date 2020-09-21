@@ -30,13 +30,13 @@ public class ManualPage<T> implements Serializable {
     }
 
     public static <T> ManualPage manualPage(List<T> data, int pageNum, int pageSize) {
-        ManualPage result = new ManualPage();
+        ManualPage<T> result = new ManualPage<>();
         if (null == data || data.size() == 0) {
             result.setPageNum(1);
             result.setPageSize(pageSize);
             result.setTotalNum(0);
             result.setTotalPage(0);
-            result.setPageData(new ArrayList());
+            result.setPageData(new ArrayList<>());
             return result;
         }
         result.setTotalNum(data.size());
