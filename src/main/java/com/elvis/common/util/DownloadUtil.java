@@ -17,7 +17,7 @@ public class DownloadUtil {
     private DownloadUtil() {
     }
 
-    private static final String FIREFOX = "Firefox";
+    private static final String FIREFOX = "firefox";
 
     /**
      * 下载文件时，针对不同浏览器，进行附件名的编码
@@ -27,6 +27,7 @@ public class DownloadUtil {
      * @throws IOException 异常
      */
     public static String encodeFileName(String fileName, String agent) throws UnsupportedEncodingException {
+        agent = agent.toLowerCase();
         if (agent.contains(FIREFOX)) {
             // 火狐浏览器
             fileName = "=?UTF-8?B?" + new BASE64Encoder().encode(fileName.getBytes("utf-8")) + "?=";
