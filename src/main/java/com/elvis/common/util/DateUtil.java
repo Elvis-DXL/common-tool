@@ -487,6 +487,54 @@ public class DateUtil {
     }
 
     /**
+     * 时间当年的开始时间
+     *
+     * @param date 目标时间
+     * @return 时间当月的开始时间
+     */
+    public static Date dateCurrYearStartTime(Date date) {
+        if (null == date) {
+            date = new Date();
+        }
+        Calendar calendar = dateToCalendar(date);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.DATE, 1);
+        return dateStartTime(calendar.getTime());
+    }
+
+    /**
+     * 时间当年的结束时间
+     *
+     * @param date 目标时间
+     * @return 时间当月的结束时间
+     */
+    public static Date dateCurrYearEndTime(Date date) {
+        if (null == date) {
+            date = new Date();
+        }
+        Calendar calendar = dateToCalendar(date);
+        calendar.set(Calendar.MONTH, 11);
+        calendar.set(Calendar.DATE, 31);
+        return dateEndTime(calendar.getTime());
+    }
+
+    /**
+     * 时间当年的开始结束时间
+     *
+     * @param date 目标时间
+     * @return 时间当月的开始结束时间
+     */
+    public static Time dateCurrYearStartEndTime(Date date) {
+        if (null == date) {
+            date = new Date();
+        }
+        Time result = new Time();
+        result.setStartTime(dateCurrYearStartTime(date));
+        result.setEndTime(dateCurrYearEndTime(date));
+        return result;
+    }
+
+    /**
      * 时间上月的开始时间
      *
      * @param date 目标时间
@@ -535,6 +583,54 @@ public class DateUtil {
     }
 
     /**
+     * 时间上年的开始时间
+     *
+     * @param date 目标时间
+     * @return 时间上年的开始时间
+     */
+    public static Date dateUpYearStartTime(Date date) {
+        if (null == date) {
+            date = new Date();
+        }
+        Calendar calendar = dateToCalendar(date);
+        calendar.add(Calendar.YEAR, -1);
+        return dateCurrYearStartTime(calendar.getTime());
+    }
+
+    /**
+     * 时间上年的结束时间
+     *
+     * @param date 目标时间
+     * @return 时间上年的结束时间
+     */
+    public static Date dateUpYearEndTime(Date date) {
+        if (null == date) {
+            date = new Date();
+        }
+        Calendar calendar = dateToCalendar(date);
+        calendar.add(Calendar.YEAR, -1);
+        return dateCurrYearEndTime(calendar.getTime());
+    }
+
+    /**
+     * 时间上年的开始结束时间
+     *
+     * @param date 目标时间
+     * @return 时间上年的开始结束时间
+     */
+    public static Time dateUpYearStartEndTime(Date date) {
+        if (null == date) {
+            date = new Date();
+        }
+        Calendar calendar = dateToCalendar(date);
+        calendar.add(Calendar.YEAR, -1);
+        Time result = new Time();
+        result.setStartTime(dateCurrYearStartTime(calendar.getTime()));
+        result.setEndTime(dateCurrYearEndTime(calendar.getTime()));
+        return result;
+    }
+
+    /**
      * 时间前指定数量周的开始结束时间
      *
      * @param date 目标时间
@@ -575,6 +671,26 @@ public class DateUtil {
         result.setEndTime(dateCurrMonthEndTime(calendar.getTime()));
         calendar.add(Calendar.MONTH, -(num - 1));
         result.setStartTime(dateCurrMonthStartTime(calendar.getTime()));
+        return result;
+    }
+
+    /**
+     * 时间前指定数量年的开始结束时间
+     *
+     * @param date 目标时间
+     * @param num  指定数量
+     * @return 时间前指定数量月的开始结束时间
+     */
+    public static Time dateUpManyYearTime(Date date, int num) {
+        if (null == date) {
+            date = new Date();
+        }
+        Calendar calendar = dateToCalendar(date);
+        calendar.add(Calendar.YEAR, -1);
+        Time result = new Time();
+        result.setEndTime(dateCurrYearEndTime(calendar.getTime()));
+        calendar.add(Calendar.YEAR, -(num - 1));
+        result.setStartTime(dateCurrYearStartTime(calendar.getTime()));
         return result;
     }
 
