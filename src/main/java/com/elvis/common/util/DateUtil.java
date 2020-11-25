@@ -679,7 +679,7 @@ public class DateUtil {
      *
      * @param date 目标时间
      * @param num  指定数量
-     * @return 时间前指定数量月的开始结束时间
+     * @return 时间前指定数量年的开始结束时间
      */
     public static Time dateUpManyYearTime(Date date, int num) {
         if (null == date) {
