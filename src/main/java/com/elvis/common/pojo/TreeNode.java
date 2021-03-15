@@ -30,7 +30,7 @@ public class TreeNode implements Serializable {
     @ApiModelProperty("是否叶子节点")
     private Boolean isLeaf;
 
-    @ApiModelProperty("开始时间字符串")
+    @ApiModelProperty("节点类型")
     private String type;
 
     @ApiModelProperty("节点描述")
