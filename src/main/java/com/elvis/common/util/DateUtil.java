@@ -4,8 +4,10 @@ import com.elvis.common.pojo.Time;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Elvis
@@ -711,4 +713,25 @@ public class DateUtil {
         return (int) countDays;
     }
 
+    /**
+     * 获取两个时间之间的年月字符串集合
+     *
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @param caseNum   需要的时间格式
+     * @return 字符串集合
+     */
+    public static List<String> yearMonthStr(Date startTime, Date endTime, int caseNum) {
+        if (null == startTime || null == endTime || startTime.after(endTime)) {
+            return new ArrayList<>();
+        }
+        Calendar min = dateToCalendar(dateStartTime(startTime));
+        Calendar max = dateToCalendar(dateEndTime(endTime));
+        ArrayList<String> result = new ArrayList<>();
+        while (min.before(max)) {
+            result.add(formatDate(min.getTime(), caseNum));
+            min.add(Calendar.MONTH, 1);
+        }
+        return result;
+    }
 }
