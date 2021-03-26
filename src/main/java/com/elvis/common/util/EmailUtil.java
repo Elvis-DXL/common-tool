@@ -9,38 +9,16 @@ import org.apache.commons.mail.SimpleEmail;
  * @since : 2020/8/28 17:37
  */
 public class EmailUtil {
-    private EmailUtil(EmailProp emailProp) {
-        this.emailProp = emailProp;
-    }
 
     private EmailProp emailProp;
 
-    private static EmailUtil emailUtil;
-
-    public static EmailUtil getInstance(EmailProp emailProp) {
-        if (null == emailUtil) {
-            synchronized (EmailUtil.class) {
-                if (null == emailUtil) {
-                    if (emailProp == null || StringUtil.isEmpty(emailProp.getUsername()) || StringUtil.isEmpty(emailProp.getPassword())
-                            || StringUtil.isEmpty(emailProp.getProtocol()) || StringUtil.isEmpty(emailProp.getHost())
-                            || StringUtil.isEmpty(emailProp.getPort())) {
-                        throw new IllegalArgumentException("Configuration information error[" + emailProp + "]");
-                    }
-                    emailUtil = new EmailUtil(emailProp);
-                }
-            }
-        }
-        return emailUtil;
-    }
-
-    public static EmailUtil getNowInstance(EmailProp emailProp) {
+    public EmailUtil(EmailProp emailProp) {
         if (emailProp == null || StringUtil.isEmpty(emailProp.getUsername()) || StringUtil.isEmpty(emailProp.getPassword())
                 || StringUtil.isEmpty(emailProp.getProtocol()) || StringUtil.isEmpty(emailProp.getHost())
                 || StringUtil.isEmpty(emailProp.getPort())) {
             throw new IllegalArgumentException("Configuration information error[" + emailProp + "]");
         }
-        emailUtil = new EmailUtil(emailProp);
-        return emailUtil;
+        this.emailProp = emailProp;
     }
 
     /**

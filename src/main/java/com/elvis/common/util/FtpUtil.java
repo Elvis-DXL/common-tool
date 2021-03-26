@@ -15,39 +15,19 @@ import java.util.List;
  * @since : 2020/8/28 17:37
  */
 public class FtpUtil {
-    private FtpUtil(FtpProp ftpProp) {
-        this.ftpProp = ftpProp;
-    }
 
     private FtpProp ftpProp;
 
     private FTPClient ftpClient;
 
-    private static FtpUtil ftpUtil;
     private static final String SLASH = "/";
 
-    public static FtpUtil getInstance(FtpProp ftpProp) {
-        if (null == ftpUtil) {
-            synchronized (FtpUtil.class) {
-                if (null == ftpUtil) {
-                    if (null == ftpProp || StringUtil.isEmpty(ftpProp.getHost()) || null == ftpProp.getPort()
-                            || StringUtil.isEmpty(ftpProp.getUsername()) || StringUtil.isEmpty(ftpProp.getPassword())) {
-                        throw new IllegalArgumentException("Configuration information error[" + ftpProp + "]");
-                    }
-                    ftpUtil = new FtpUtil(ftpProp);
-                }
-            }
-        }
-        return ftpUtil;
-    }
-
-    public static FtpUtil getNowInstance(FtpProp ftpProp) {
+    public FtpUtil(FtpProp ftpProp) {
         if (null == ftpProp || StringUtil.isEmpty(ftpProp.getHost()) || null == ftpProp.getPort()
                 || StringUtil.isEmpty(ftpProp.getUsername()) || StringUtil.isEmpty(ftpProp.getPassword())) {
             throw new IllegalArgumentException("Configuration information error[" + ftpProp + "]");
         }
-        ftpUtil = new FtpUtil(ftpProp);
-        return ftpUtil;
+        this.ftpProp = ftpProp;
     }
 
     /**
