@@ -1,5 +1,7 @@
 package com.elvis.common.util;
 
+import java.text.DecimalFormat;
+
 /**
  * @author : Elvis
  * @since : 2021/3/26 10:20
@@ -109,6 +111,28 @@ public class NumberUtil {
             min = min < number ? min : number;
         }
         return min;
+    }
+
+    /**
+     * 四舍五入后保留小数
+     *
+     * @param value 值
+     * @param num   保留小数位数
+     * @return 结果
+     */
+    public static Double doubleFmt(Double value, Integer num) {
+        if (value == null) {
+            return 0D;
+        }
+        if (num == null || num < 1) {
+            return value;
+        }
+        StringBuilder builder = new StringBuilder("#.");
+        for (int i = 0; i < num; i++) {
+            builder.append("0");
+        }
+        DecimalFormat df = new DecimalFormat(builder.toString());
+        return Double.parseDouble(df.format(value));
     }
 
 }
