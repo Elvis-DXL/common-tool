@@ -41,6 +41,15 @@ public class FtpUtil {
         return ftpUtil;
     }
 
+    public static FtpUtil getNowInstance(FtpProp ftpProp) {
+        if (null == ftpProp || StringUtil.isEmpty(ftpProp.getHost()) || null == ftpProp.getPort()
+                || StringUtil.isEmpty(ftpProp.getUsername()) || StringUtil.isEmpty(ftpProp.getPassword())) {
+            throw new IllegalArgumentException("Configuration information error[" + ftpProp + "]");
+        }
+        ftpUtil = new FtpUtil(ftpProp);
+        return ftpUtil;
+    }
+
     /**
      * 初始化FTP连接
      *

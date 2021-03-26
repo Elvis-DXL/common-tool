@@ -33,6 +33,16 @@ public class EmailUtil {
         return emailUtil;
     }
 
+    public static EmailUtil getNowInstance(EmailProp emailProp) {
+        if (emailProp == null || StringUtil.isEmpty(emailProp.getUsername()) || StringUtil.isEmpty(emailProp.getPassword())
+                || StringUtil.isEmpty(emailProp.getProtocol()) || StringUtil.isEmpty(emailProp.getHost())
+                || StringUtil.isEmpty(emailProp.getPort())) {
+            throw new IllegalArgumentException("Configuration information error[" + emailProp + "]");
+        }
+        emailUtil = new EmailUtil(emailProp);
+        return emailUtil;
+    }
+
     /**
      * 发送邮件
      *
