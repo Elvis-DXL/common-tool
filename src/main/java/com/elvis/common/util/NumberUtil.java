@@ -61,7 +61,7 @@ public class NumberUtil {
     }
 
     /**
-     * 求源数据中最大值
+     * 求源数据中最小值
      *
      * @param numbers 源数据
      * @return 最小值
@@ -78,7 +78,7 @@ public class NumberUtil {
     }
 
     /**
-     * 求源数据中最大值
+     * 求源数据中最小值
      *
      * @param numbers 源数据
      * @return 最小值
@@ -95,7 +95,7 @@ public class NumberUtil {
     }
 
     /**
-     * 求源数据中最大值
+     * 求源数据中最小值
      *
      * @param numbers 源数据
      * @return 最小值
