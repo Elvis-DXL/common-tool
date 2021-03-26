@@ -722,8 +722,13 @@ public class DateUtil {
      * @return 字符串集合
      */
     public static List<String> yearMonthStr(Date startTime, Date endTime, int caseNum) {
-        if (null == startTime || null == endTime || startTime.after(endTime)) {
+        if (null == startTime || null == endTime) {
             return new ArrayList<>();
+        }
+        if (startTime.after(endTime)) {
+            Date temp = startTime;
+            startTime = endTime;
+            endTime = temp;
         }
         Calendar min = dateToCalendar(dateStartTime(startTime));
         Calendar max = dateToCalendar(dateEndTime(endTime));
