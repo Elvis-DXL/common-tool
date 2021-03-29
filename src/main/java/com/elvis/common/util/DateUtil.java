@@ -682,16 +682,19 @@ public class DateUtil {
     /**
      * 时间前指定数量月的开始结束时间
      *
-     * @param date 目标时间
-     * @param num  指定数量
+     * @param date      目标时间
+     * @param num       指定数量
+     * @param isConCurr 是否包含当前月
      * @return 时间前指定数量月的开始结束时间
      */
-    public static Time dateUpManyMonthTime(Date date, int num) {
+    public static Time dateUpManyMonthTime(Date date, int num, boolean isConCurr) {
         if (null == date) {
             date = new Date();
         }
         Calendar calendar = dateToCalendar(date);
-        calendar.add(Calendar.MONTH, -1);
+        if (!isConCurr) {
+            calendar.add(Calendar.MONTH, -1);
+        }
         Time result = new Time();
         result.setEndTime(dateCurrMonthEndTime(calendar.getTime()));
         calendar.add(Calendar.MONTH, -(num - 1));
@@ -702,16 +705,19 @@ public class DateUtil {
     /**
      * 时间前指定数量年的开始结束时间
      *
-     * @param date 目标时间
-     * @param num  指定数量
+     * @param date      目标时间
+     * @param num       指定数量
+     * @param isConCurr 是否包含当前年
      * @return 时间前指定数量年的开始结束时间
      */
-    public static Time dateUpManyYearTime(Date date, int num) {
+    public static Time dateUpManyYearTime(Date date, int num, boolean isConCurr) {
         if (null == date) {
             date = new Date();
         }
         Calendar calendar = dateToCalendar(date);
-        calendar.add(Calendar.YEAR, -1);
+        if (!isConCurr) {
+            calendar.add(Calendar.YEAR, -1);
+        }
         Time result = new Time();
         result.setEndTime(dateCurrYearEndTime(calendar.getTime()));
         calendar.add(Calendar.YEAR, -(num - 1));
