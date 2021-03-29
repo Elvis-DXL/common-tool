@@ -633,6 +633,29 @@ public class DateUtil {
     }
 
     /**
+     * 时间前指定数量天的开始结束时间
+     *
+     * @param date      目标时间
+     * @param num       指定数量
+     * @param isConCurr 是否包含当前天
+     * @return 时间前指定数量天的开始结束时间
+     */
+    public static Time dateUpManyDayTime(Date date, int num, boolean isConCurr) {
+        if (null == date) {
+            date = new Date();
+        }
+        Calendar calendar = dateToCalendar(date);
+        if (!isConCurr) {
+            calendar.add(Calendar.DATE, -1);
+        }
+        Time result = new Time();
+        result.setEndTime(dateEndTime(calendar.getTime()));
+        calendar.add(Calendar.DATE, -(num - 1));
+        result.setStartTime(dateStartTime(calendar.getTime()));
+        return result;
+    }
+
+    /**
      * 时间前指定数量周的开始结束时间
      *
      * @param date 目标时间
