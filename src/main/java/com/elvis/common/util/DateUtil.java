@@ -336,7 +336,7 @@ public class DateUtil {
      * @param date 目标时间
      * @return 星期名称
      */
-    private static String dateWeekName(Date date) {
+    public static String dateWeekName(Date date) {
         if (null == date) {
             date = new Date();
         }
