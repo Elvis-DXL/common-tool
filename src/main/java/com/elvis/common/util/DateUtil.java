@@ -768,4 +768,31 @@ public class DateUtil {
         }
         return result;
     }
+
+    /**
+     * 获取两个时间之间的年月字符串集合
+     *
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @param pattern   需要的时间格式
+     * @return 字符串集合
+     */
+    public static List<String> yearMonthStr(Date startTime, Date endTime, String pattern) {
+        if (null == startTime || null == endTime) {
+            return new ArrayList<>();
+        }
+        if (startTime.after(endTime)) {
+            Date temp = startTime;
+            startTime = endTime;
+            endTime = temp;
+        }
+        Calendar max = dateToCalendar(dateEndTime(endTime));
+        Calendar min = dateToCalendar(dateStartTime(startTime));
+        ArrayList<String> result = new ArrayList<>();
+        while (min.before(max)) {
+            result.add(formatDate(min.getTime(), pattern));
+            min.add(Calendar.MONTH, 1);
+        }
+        return result;
+    }
 }
