@@ -14,7 +14,7 @@ import java.util.List;
  * @author : Elvis
  * @since : 2020/8/28 17:37
  */
-public class FtpUtil {
+public class FtpUtils {
 
     private FtpProp ftpProp;
 
@@ -22,9 +22,9 @@ public class FtpUtil {
 
     private static final String SLASH = "/";
 
-    public FtpUtil(FtpProp ftpProp) {
-        if (null == ftpProp || StringUtil.isEmpty(ftpProp.getHost()) || null == ftpProp.getPort()
-                || StringUtil.isEmpty(ftpProp.getUsername()) || StringUtil.isEmpty(ftpProp.getPassword())) {
+    public FtpUtils(FtpProp ftpProp) {
+        if (null == ftpProp || StringUtils.isEmpty(ftpProp.getHost()) || null == ftpProp.getPort()
+                || StringUtils.isEmpty(ftpProp.getUsername()) || StringUtils.isEmpty(ftpProp.getPassword())) {
             throw new IllegalArgumentException("Configuration information error[" + ftpProp + "]");
         }
         this.ftpProp = ftpProp;
@@ -58,10 +58,10 @@ public class FtpUtil {
      */
     public boolean uploadFile(String filePath, String fileName, InputStream inStream) {
         boolean flag = false;
-        if (StringUtil.isEmpty(filePath)) {
+        if (StringUtils.isEmpty(filePath)) {
             throw new IllegalArgumentException("filePath can not be empty");
         }
-        if (StringUtil.isEmpty(fileName)) {
+        if (StringUtils.isEmpty(fileName)) {
             throw new IllegalArgumentException("fileName can not be empty");
         }
         try {
@@ -91,7 +91,7 @@ public class FtpUtil {
                     e.printStackTrace();
                 }
             }
-            IOUtil.closeStream(inStream);
+            IOUtils.closeStream(inStream);
         }
         return flag;
     }
@@ -106,10 +106,10 @@ public class FtpUtil {
      */
     public boolean downloadFile(String filePath, String fileName, OutputStream outStream) {
         boolean flag = false;
-        if (StringUtil.isEmpty(filePath)) {
+        if (StringUtils.isEmpty(filePath)) {
             throw new IllegalArgumentException("filePath can not be empty");
         }
-        if (StringUtil.isEmpty(fileName)) {
+        if (StringUtils.isEmpty(fileName)) {
             throw new IllegalArgumentException("fileName can not be empty");
         }
         InputStream inStream = null;
@@ -121,7 +121,7 @@ public class FtpUtil {
             if (inStream == null) {
                 throw new IOException("Failed to read file stream：" + fileName);
             }
-            IOUtil.inToOut(inStream, outStream);
+            IOUtils.inToOut(inStream, outStream);
             ftpClient.logout();
             flag = true;
         } catch (IOException e) {
@@ -135,7 +135,7 @@ public class FtpUtil {
                     e.printStackTrace();
                 }
             }
-            IOUtil.closeStream(inStream, outStream);
+            IOUtils.closeStream(inStream, outStream);
         }
         return flag;
     }
@@ -148,10 +148,10 @@ public class FtpUtil {
      * @return 是否成功
      */
     public boolean deleteFile(String filePath, String fileName) {
-        if (StringUtil.isEmpty(filePath)) {
+        if (StringUtils.isEmpty(filePath)) {
             throw new IllegalArgumentException("filePath can not be empty");
         }
-        if (StringUtil.isEmpty(fileName)) {
+        if (StringUtils.isEmpty(fileName)) {
             throw new IllegalArgumentException("fileName can not be empty");
         }
         boolean flag = false;
@@ -184,7 +184,7 @@ public class FtpUtil {
      * @throws IOException 创建异常
      */
     private boolean createDir(String filePath) throws IOException {
-        if (StringUtil.isEmpty(filePath)) {
+        if (StringUtils.isEmpty(filePath)) {
             throw new IllegalArgumentException("filePath can not be empty");
         }
         if (filePath.startsWith(SLASH)) {

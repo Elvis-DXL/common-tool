@@ -13,8 +13,8 @@ import java.net.URLEncoder;
  * @author : Elvis
  * @since : 2020/9/3 17:05
  */
-public class DownloadUtil {
-    private DownloadUtil() {
+public class DownloadUtils {
+    private DownloadUtils() {
     }
 
     private static final String FIREFOX = "firefox";
@@ -45,11 +45,11 @@ public class DownloadUtil {
      *
      * @param request  请求对象
      * @param response 响应对象
-     * @param ftpUtil  ftp工具
+     * @param ftpUtils  ftp工具
      * @param fileName 文件名
      * @param filePath 文件目录
      */
-    public static void downloadByFtp(HttpServletRequest request, HttpServletResponse response, FtpUtil ftpUtil, String fileName, String filePath) {
+    public static void downloadByFtp(HttpServletRequest request, HttpServletResponse response, FtpUtils ftpUtils, String fileName, String filePath) {
         String agent = request.getHeader("USER-AGENT").toLowerCase();
         OutputStream outStream = null;
         try {
@@ -57,11 +57,11 @@ public class DownloadUtil {
             String name = encodeFileName(fileName, agent);
             response.setHeader("Content-disposition", "attachment;filename=" + name);
             response.setContentType("application/octet-stream");
-            ftpUtil.downloadFile(filePath, fileName, outStream);
+            ftpUtils.downloadFile(filePath, fileName, outStream);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            IOUtil.closeStream(outStream);
+            IOUtils.closeStream(outStream);
         }
     }
 

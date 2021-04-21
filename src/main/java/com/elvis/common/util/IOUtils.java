@@ -9,9 +9,9 @@ import java.io.OutputStream;
  * @author : Elvis
  * @since : 2020/6/24 11:07
  */
-public class IOUtil {
+public class IOUtils {
 
-    private IOUtil() {
+    private IOUtils() {
     }
 
     /**

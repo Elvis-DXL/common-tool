@@ -7,9 +7,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author : Elvis
  * @since : 2020/10/22 11:50
  */
-public class IDUtil {
+public class IDUtils {
 
-    private IDUtil() {
+    private IDUtils() {
     }
 
     /**

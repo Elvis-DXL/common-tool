@@ -13,9 +13,9 @@ import java.util.List;
  * @author : Elvis
  * @since : 2020/6/18 15:33
  */
-public class DateUtil {
+public class DateUtils {
 
-    private DateUtil() {
+    private DateUtils() {
     }
 
     /**

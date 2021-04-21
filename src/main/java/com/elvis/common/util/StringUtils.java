@@ -9,9 +9,9 @@ import java.util.StringTokenizer;
  * @author : Elvis
  * @since : 2020/6/24 11:04
  */
-public class StringUtil {
+public class StringUtils {
 
-    private StringUtil() {
+    private StringUtils() {
     }
 
     /**

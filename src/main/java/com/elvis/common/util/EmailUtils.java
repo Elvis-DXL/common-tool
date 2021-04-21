@@ -8,14 +8,14 @@ import org.apache.commons.mail.SimpleEmail;
  * @author : Elvis
  * @since : 2020/8/28 17:37
  */
-public class EmailUtil {
+public class EmailUtils {
 
     private EmailProp emailProp;
 
-    public EmailUtil(EmailProp emailProp) {
-        if (emailProp == null || StringUtil.isEmpty(emailProp.getUsername()) || StringUtil.isEmpty(emailProp.getPassword())
-                || StringUtil.isEmpty(emailProp.getProtocol()) || StringUtil.isEmpty(emailProp.getHost())
-                || StringUtil.isEmpty(emailProp.getPort())) {
+    public EmailUtils(EmailProp emailProp) {
+        if (emailProp == null || StringUtils.isEmpty(emailProp.getUsername()) || StringUtils.isEmpty(emailProp.getPassword())
+                || StringUtils.isEmpty(emailProp.getProtocol()) || StringUtils.isEmpty(emailProp.getHost())
+                || StringUtils.isEmpty(emailProp.getPort())) {
             throw new IllegalArgumentException("Configuration information error[" + emailProp + "]");
         }
         this.emailProp = emailProp;
@@ -29,7 +29,7 @@ public class EmailUtil {
      * @param targetEmail 目标邮箱地址
      */
     public void sendEmail(String title, String msg, String... targetEmail) throws EmailException {
-        if (StringUtil.isEmpty(title) || StringUtil.isEmpty(msg) || null == targetEmail || targetEmail.length == 0) {
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(msg) || null == targetEmail || targetEmail.length == 0) {
             throw new IllegalArgumentException("Missing parameters[title=" + title + ";msg=" + msg + ";targetEmail=" + targetEmail);
         }
         SimpleEmail simpleEmail = new SimpleEmail();

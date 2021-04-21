@@ -11,9 +11,9 @@ import java.util.Map;
  * @author : Elvis
  * @since : 2020/7/30 15:11
  */
-public class TreeUtil {
+public class TreeUtils {
 
-    private TreeUtil() {
+    private TreeUtils() {
     }
 
     public static List<TreeNode> formatTree(List<TreeNode> data) {
@@ -25,7 +25,7 @@ public class TreeUtil {
             }
             List<TreeNode> children;
             for (TreeNode node : data) {
-                if (StringUtil.isNotEmpty(node.getParentId()) && tmpMap.get(node.getParentId()) != null
+                if (StringUtils.isNotEmpty(node.getParentId()) && tmpMap.get(node.getParentId()) != null
                         && !node.getId().equalsIgnoreCase(node.getParentId())) {
                     children = tmpMap.get(node.getParentId()).getChildren() == null ?
                             new ArrayList<>(100) : tmpMap.get(node.getParentId()).getChildren();
