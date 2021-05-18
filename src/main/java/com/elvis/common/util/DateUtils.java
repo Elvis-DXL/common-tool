@@ -759,10 +759,10 @@ public class DateUtils {
             startTime = endTime;
             endTime = temp;
         }
-        Calendar min = dateToCalendar(dateStartTime(startTime));
-        Calendar max = dateToCalendar(dateEndTime(endTime));
+        Calendar min = dateToCalendar(dateCurrMonthStartTime(startTime));
+        Calendar max = dateToCalendar(dateCurrMonthEndTime(endTime));
         ArrayList<String> result = new ArrayList<>();
-        while (min.before(max)) {
+        while (min.getTime().getTime() <= max.getTime().getTime()) {
             result.add(formatDate(min.getTime(), caseNum));
             min.add(Calendar.MONTH, 1);
         }
@@ -786,10 +786,10 @@ public class DateUtils {
             startTime = endTime;
             endTime = temp;
         }
-        Calendar max = dateToCalendar(dateEndTime(endTime));
-        Calendar min = dateToCalendar(dateStartTime(startTime));
+        Calendar max = dateToCalendar(dateCurrMonthEndTime(endTime));
+        Calendar min = dateToCalendar(dateCurrMonthStartTime(startTime));
         ArrayList<String> result = new ArrayList<>();
-        while (min.before(max)) {
+        while (min.getTime().getTime() <= max.getTime().getTime()) {
             result.add(formatDate(min.getTime(), pattern));
             min.add(Calendar.MONTH, 1);
         }
