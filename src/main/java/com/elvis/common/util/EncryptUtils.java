@@ -15,8 +15,6 @@ public class EncryptUtils {
 
     private Key key;
 
-    private String secretKey;
-
     private final String CHARSET = "UTF-8";
     private final String ALGORITHM = "DES";
 
@@ -24,10 +22,6 @@ public class EncryptUtils {
         if (StringUtils.isEmpty(secretKey)) {
             throw new IllegalArgumentException("SecretKey can not be empty");
         }
-        this.secretKey = secretKey;
-    }
-
-    private void initKey() {
         try {
             KeyGenerator generator = KeyGenerator.getInstance(ALGORITHM);
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
@@ -44,7 +38,6 @@ public class EncryptUtils {
         if (StringUtils.isEmpty(aimStr)) {
             return null;
         }
-        initKey();
         Base64 base64 = new Base64();
         try {
             byte[] bytes = aimStr.getBytes(CHARSET);
@@ -61,7 +54,6 @@ public class EncryptUtils {
         if (StringUtils.isEmpty(aimStr)) {
             return null;
         }
-        initKey();
         Base64 base64 = new Base64();
         try {
             byte[] bytes = base64.decode(aimStr);

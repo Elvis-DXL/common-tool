@@ -6,7 +6,7 @@
 
     <groupId>com.elvis</groupId>
     <artifactId>common-tool</artifactId>
-    <version>3.0-RELEASE</version>
+    <version>3.1-RELEASE</version>
 
     <dependencies>
         <dependency>
